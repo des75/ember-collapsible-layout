@@ -14,24 +14,33 @@ export default Ember.Component.extend({
   actions: {
     collapsePanel(){
       this.set('isCollapsed', true);
-
-      let layout_el = this.$(".collapsible-panel-container").closest("collapsible-layout");
-      layout_el.addClass(`${this.get("region")}-collapsed`);
-
-      this.$(".collapsible-panel--center", layout_el).css(this.get("region"), 0);
-      
+      this.updateLayout();
       this.sendAction('collapsePanel');
     },
     expandPanel(){
-      this.set('isCollapsed', false);
-      
-      let layout_el = this.$(".collapsible-panel-container").closest("collapsible-layout");
-      layout_el.removeClass(`${this.get("region")}-collapsed`);
-      
-      this.$(".collapsible-panel--center", layout_el).css(this.get("region"), this.get("sizeValue"));
-      
+      this.set('isCollapsed', false);      
+      this.updateLayout();
       this.sendAction('expandPanel');
     }
+  },
+
+  updateLayout(){
+    let layout_el = this.$().closest(".collapsible-layout");
+    let position_value = 0;
+    
+    if(this.get('isCollapsed')){
+      layout_el.addClass(`${this.get("region")}-collapsed`);
+    }
+    else{
+      layout_el.removeClass(`${this.get("region")}-collapsed`);
+      position_value = this.get("sizeValue");
+    }
+
+    if(this.get("region") == "top" || this.get("region") == "bottom"){
+      $(".collapsible-panel--left .collapsible-panel, .collapsible-panel--right .collapsible-panel", layout_el).css(this.get("region"), position_value);      
+    }
+    
+    $(".collapsible-panel--center .collapsible-panel", layout_el).css(this.get("region"), position_value);
   },
 
   init(){
