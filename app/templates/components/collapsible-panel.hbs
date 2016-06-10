@@ -1,26 +1,26 @@
 <div class="collapsible-panel {{customPanelClasses}}" style="{{style}}">
-  {{#if alignmentNorth}}
+  {{#if top}}
   <div class="collapsible-panel-controls">
     <button class="btn button-collapse-panel" {{action "collapsePanel"}}><i class="glyphicon glyphicon-menu-up"></i></button>
     <button class="btn button-expand-panel" {{action "expandPanel"}}><i class="glyphicon glyphicon-menu-down"></i></button>
   </div>
   {{/if}}
   
-  {{#if alignmentEast}}
+  {{#if right}}
     <div class="collapsible-panel-controls">
       <button class="btn button-collapse-panel" {{action "collapsePanel"}}><i class="glyphicon glyphicon-menu-right"></i></button>
       <button class="btn button-expand-panel" {{action "expandPanel"}}><i class="glyphicon glyphicon-menu-left"></i></button>
     </div>
   {{/if}}
   
-  {{#if alignmentSouth}}
+  {{#if bottom}}
     <div class="collapsible-panel-controls">
       <button class="btn button-collapse-panel" {{action "collapsePanel"}}><i class="glyphicon glyphicon-menu-down"></i></button>
       <button class="btn button-expand-panel" {{action "expandPanel"}}><i class="glyphicon glyphicon-menu-up"></i></button>
     </div>
   {{/if}}
   
-  {{#if alignmentWest}}
+  {{#if left}}
     <div class="collapsible-panel-controls">
       <button class="btn button-collapse-panel" {{action "collapsePanel"}}><i class="glyphicon glyphicon-menu-left"></i></button>
       <button class="btn button-expand-panel" {{action "expandPanel"}}><i class="glyphicon glyphicon-menu-right"></i></button>
