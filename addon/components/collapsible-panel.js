@@ -18,7 +18,7 @@ export default Ember.Component.extend({
       let layout_el = this.$(".collapsible-panel-container").closest("collapsible-layout");
       layout_el.addClass(`${this.get("region")}-collapsed`);
 
-      $(".collapsible-panel--center", layout_el).css(this.get("region"), 0);
+      this.$(".collapsible-panel--center", layout_el).css(this.get("region"), 0);
       
       this.sendAction('collapsePanel');
     },
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
       let layout_el = this.$(".collapsible-panel-container").closest("collapsible-layout");
       layout_el.removeClass(`${this.get("region")}-collapsed`);
       
-      $(".collapsible-panel--center", layout_el).css(this.get("region"), this.get("sizeValue"));
+      this.$(".collapsible-panel--center", layout_el).css(this.get("region"), this.get("sizeValue"));
       
       this.sendAction('expandPanel');
     }
