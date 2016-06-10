@@ -3,21 +3,33 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNameBindings: [
     "isCollapsed:collapsed:",
-    "alignmentNorth:collapsible-panel--north",
-    "alignmentEast:collapsible-panel--east",
-    "alignmentSouth:collapsible-panel--south",
-    "alignmentWest:collapsible-panel--west",
-    "alignmentCenter:collapsible-panel--center"
+    "top:collapsible-panel--top",
+    "right:collapsible-panel--right",
+    "bottom:collapsible-panel--bottom",
+    "left:collapsible-panel--left",
+    "center:collapsible-panel--center"
   ],
   classNames: "collapsible-panel-container",
 
   actions: {
     collapsePanel(){
       this.set('isCollapsed', true);
+
+      let layout_el = this.$(".collapsible-panel-container").closest("collapsible-layout");
+      layout_el.addClass(`${this.get("region")}-collapsed`);
+
+      $(".collapsible-panel--center", layout_el).css(this.get("region"), 0);
+      
       this.sendAction('collapsePanel');
     },
     expandPanel(){
       this.set('isCollapsed', false);
+      
+      let layout_el = this.$(".collapsible-panel-container").closest("collapsible-layout");
+      layout_el.removeClass(`${this.get("region")}-collapsed`);
+      
+      $(".collapsible-panel--center", layout_el).css(this.get("region"), this.get("sizeValue"));
+      
       this.sendAction('expandPanel');
     }
   },
@@ -26,27 +38,15 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     let config = this.get("config");
+    this.set(config.region, true);
+    this.set("region", config.region);
 
-    switch(config.region){
-    case "north":
-      this.set("alignmentNorth", true);
-      break;
+    let height = config.height || 0;
+    let width = config.width || 0;
 
-    case "east":
-      this.set("alignmentEast", true);
-      break;
-
-    case "south":
-      this.set("alignmentSouth", true);
-      break;
-
-    case "west":
-      this.set("alignmentWest", true);
-      break;
-
-    case "center":
-      this.set("alignmentCenter", true);
-      break;
-    }
+    if(config.region == "top" || config.region == "bottom")
+      this.set("sizeValue", `${height}px`);
+    else
+      this.set("sizeValue", `${width}px`);
   }
 });
