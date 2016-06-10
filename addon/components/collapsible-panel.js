@@ -2,13 +2,15 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNameBindings: [
-    "isCollapsed:collapsible-panel-container--collapsed:collapsible-panel-container",
+    "isCollapsed:collapsed:",
     "alignmentNorth:collapsible-panel--north",
     "alignmentEast:collapsible-panel--east",
     "alignmentSouth:collapsible-panel--south",
-    "alignmentWest:collapsible-panel--west"
+    "alignmentWest:collapsible-panel--west",
+    "alignmentCenter:collapsible-panel--center"
   ],
-  
+  classNames: "collapsible-panel-container",
+
   actions: {
     collapsePanel(){
       this.set('isCollapsed', true);
@@ -19,7 +21,7 @@ export default Ember.Component.extend({
       this.sendAction('expandPanel');
     }
   },
-  
+
   init(){
     this._super(...arguments);
 
@@ -40,6 +42,10 @@ export default Ember.Component.extend({
 
     case "west":
       this.set("alignmentWest", true);
+      break;
+
+    case "center":
+      this.set("alignmentCenter", true);
       break;
     }
   }
