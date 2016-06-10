@@ -52,14 +52,14 @@ export default Ember.Component.extend({
     this.set(config.region, true);
     this.set("region", config.region);
 
-    let height = config.height || 0;
-    let width = config.width || 0;
+    let height = config.height || null;
+    let width = config.width || null;
 
-    if(config.region == "top" || config.region == "bottom"){
+    if(height && config.region == "top" || config.region == "bottom"){
       this.set("sizeValue", `${height}px`);
       this.set("_style", {height: this.get("sizeValue")} );
     }   
-    else if(config.region == "left" || config.region == "right"){
+    else if(width && config.region == "left" || config.region == "right"){
       this.set("sizeValue", `${width}px`);
       this.set("_style", {width: this.get("sizeValue")} );
     }
