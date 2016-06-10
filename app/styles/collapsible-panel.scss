@@ -88,7 +88,7 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
-        height: 0;
+        height: 0 !important;
       }
     }
     .button-collapse-panel{
@@ -118,7 +118,7 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
-        width: 0;
+        width: 0 !important;
       }
     }
 
@@ -147,7 +147,7 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
-        height: 0;
+        height: 0 !important;
       }
     }
 
@@ -178,7 +178,7 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
-        width: 0;
+        width: 0 !important;
       }
     }
 
