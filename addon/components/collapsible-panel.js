@@ -25,33 +25,30 @@ export default Ember.Component.extend({
   },
 
   updateLayout(){
-    let layout_el = this.$().closest(".collapsible-layout");
     let position_value = 0;
 
-    if(this.get('isCollapsed')){
-      layout_el.addClass(`${this.get("region")}-collapsed`);
-    }
-    else{
-      layout_el.removeClass(`${this.get("region")}-collapsed`);
+    if(!this.get('isCollapsed')){
       position_value = this.get("sizeValue");
     }
-
-    if(this.get("region") == "top" || this.get("region") == "bottom"){
-      $(".collapsible-panel--left .collapsible-panel, .collapsible-panel--right .collapsible-panel", layout_el).css(this.get("region"), position_value);
-    }
-    else if(this.get("region") == "left" || this.get("region") == "right"){
-
-    }
-
+    
+    let css = {};    
+    css[`${this.get("region")}`] = position_value;
+    
+    this.get("layout").togglePanel(this.get("region"), css);
     this.$(".collapsible-panel").css(this.get("keySizeValue"), position_value);
-
-    $(".collapsible-panel--center .collapsible-panel", layout_el).css(this.get("region"), position_value);
   },
+
+  updateStyle(css){
+    this.$(".collapsible-panel").css(css);
+  },
+  
   init(){
     this._super(...arguments);
     let config = this.get("config");
+    let layout = this.get("layout");
     this.set(config.region, true);
     this.set("region", config.region);
+    layout.set(config.region, this);
   },
 
   didInsertElement(){
