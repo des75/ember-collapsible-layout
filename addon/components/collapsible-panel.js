@@ -61,7 +61,9 @@ export default Ember.Component.extend({
 
     let config = this.get("config");
 
-    if(!this.get("sizeValue")){
+    let sizeValue = this.get("sizeValue") || null;
+
+    if(!sizeValue){
       if(config.region == "top" || config.region == "bottom"){
         let height = config.height || this.$(".collapsible-panel").css("height");
 
