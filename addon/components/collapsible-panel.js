@@ -39,34 +39,41 @@ export default Ember.Component.extend({
     if(this.get("region") == "top" || this.get("region") == "bottom"){
       $(".collapsible-panel--left .collapsible-panel, .collapsible-panel--right .collapsible-panel", layout_el).css(this.get("region"), position_value);      
     }
+    else if(this.get("region") == "left" || this.get("region") == "right"){
+
+    }
+
+    console.log(position_value );
    
-    this.$(".collapsible-panel").css(this.get("_style"));
+    this.$(".collapsible-panel").css(this.get("keySizeValue"), position_value);
     
     $(".collapsible-panel--center .collapsible-panel", layout_el).css(this.get("region"), position_value);
   },
-
   init(){
-    this._super(...arguments);
-
+    this._super(...arguments);  
     let config = this.get("config");
     this.set(config.region, true);
     this.set("region", config.region);
-
-    let height = config.height || null;
-    let width = config.width || null;
-
-    if(height && config.region == "top" || config.region == "bottom"){
-      this.set("sizeValue", `${height}px`);
-      this.set("_style", {height: this.get("sizeValue")} );
-    }   
-    else if(width && config.region == "left" || config.region == "right"){
-      this.set("sizeValue", `${width}px`);
-      this.set("_style", {width: this.get("sizeValue")} );
-    }
   },
-
-  didRender(){
+  
+  didInsertElement(){
     this._super(...arguments);
+
+    let config = this.get("config");
+
+    if(config.region == "top" || config.region == "bottom"){
+      let height = config.height || this.$(".collapsible-panel").css("height");
+      
+      this.set("sizeValue", height);
+      this.set("keySizeValue", "height");
+    }   
+    else if(config.region == "left" || config.region == "right"){
+      let width = config.width || this.$(".collapsible-panel").css("width");
+      
+      this.set("sizeValue", width);
+      this.set("keySizeValue", "width");
+    }
+    
     this.updateLayout();
   }
 });

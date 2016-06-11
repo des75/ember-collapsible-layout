@@ -111,9 +111,9 @@ $default-west: 100px;
   &--right{
     .collapsible-panel {
       right: 0;
-      top: $default-north;
+      top: 0;
       width: $default-east;
-      bottom: $default-south;
+      bottom: 0;
       border-left: 1px solid $border-color;
     }
     &.collapsed{
@@ -171,9 +171,9 @@ $default-west: 100px;
   &--left{
     .collapsible-panel {
       left: 0;
-      top: $default-north;
+      top: 0;
       width: $default-west;
-      bottom: $default-south;
+      bottom: 0;
       border-right: 1px solid $border-color;
     }
     &.collapsed{
@@ -201,10 +201,10 @@ $default-west: 100px;
 
   &--center{
     .collapsible-panel {
-      left: $default-west;
-      top: $default-north;
-      right: $default-west;
-      bottom: $default-south;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
     }
 
     .button-collapse-panel{
