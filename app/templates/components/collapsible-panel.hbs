@@ -1,4 +1,4 @@
-<div class="collapsible-panel {{customPanelClasses}}" style="{{style}}">
+<div class="collapsible-panel {{if isCollapsed "collapsed"}} {{customPanelClasses}}" style="{{relStyle}}">
   {{#if top}}
   <div class="collapsible-panel-controls">
     <button class="btn button-collapse-panel" {{action "collapsePanel"}}><i class="glyphicon glyphicon-menu-up"></i></button>

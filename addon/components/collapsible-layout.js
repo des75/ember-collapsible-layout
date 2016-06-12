@@ -8,18 +8,163 @@ export default Ember.Component.extend({
     "bottomCollapsed:bottom-collapsed",
     "leftCollapsed:left-collapsed"
   ],
-  togglePanel (region, css){
-    this.set(`${region}Collapsed`, this.get(region).get("isCollapsed"));
-    
-    if(region == "top" || region == "bottom"){
-      if(this.get("left"))
-        this.get("left").updateStyle(css);
 
-      if(this.get("right"))
-        this.get("right").updateStyle(css);
+  regions: ["top", "right", "bottom", "left", "center"],
+
+  actions: {
+    collapsePanel (region){
+      this.collapsePanel(region);
+    },
+    expandPanel (region){
+      this.expandPanel(region);
+    },
+  },
+
+  // ==
+  collapseMobilePanel (region){
+    this._collapse(region);
+    this._expand("center");
+  },
+  expandMobilePanel (region){
+    this.collapseAllPanels();
+    this._expand(region);
+  },
+  collapsePanel (region){
+    if(this.get(region)){
+      if(this.get("mobile")){
+        this.collapseMobilePanel(region);
+      }
+      else{
+        this._collapse(region);
+      }
     }
+  },
+  expandPanel (region){
+    if(this.get(region)){
+      if(this.get("mobile")){
+        this.expandMobilePanel(region);
+      }
+      else{
+        this._expand(region);
+      }
+    }
+  },
+  // ==
+
+  
+  _collapse(region){
+    if(this.get(region)){
+      this.get(region).collapse();
+    }
+  },
+  _expand(region){
+    if(this.get(region)){
+      this.get(region).expand();
+    }
+  },
+
+  collapseSidePanels (){
+    this._collapse("top");
+    this._collapse("right");
+    this._collapse("bottom");
+    this._collapse("left");
+  },
+  expandSidePanels (){
+    this._expand("top");
+    this._expand("right");
+    this._expand("bottom");
+    this._expand("left");
+  },
+
+  collapseAllPanels(){
+    this.collapseSidePanels();
+    this._collapse("center");
+  },
+  expandAllPanels(){
+    this.expandSidePanels();
+    this._expand("center");
+  },
+
+  restylePanels(){
+    this.regions.forEach((r) => {
+      if(this.get(r)){
+	this.get(r).updateLayout();
+      }
+    });
+  },
+  
+  styleFor(region){
+    var layout =this;
+    var styleValue = function(r){
+      if(layout.get(r)){
+	return layout.get(r).isCollapsed ? 0 : layout.get(r).sizeValue;
+      }
+      else{
+	return 0;
+      }
+    };
     
-    if(this.get("center"))
-      this.get("center").updateStyle(css);
+    switch(region){
+    case "top":
+    case "bottom":
+      return `height: ${styleValue(region)}px;`;
+      break;
+      
+    case "left":
+    case "right":
+      return `width: ${styleValue(region)}px;
+top: ${styleValue("top")}px;
+bottom: ${styleValue("bottom")}px;`;
+      break;
+
+    case "center":
+      return `top: ${styleValue("top")}px;
+right: ${styleValue("right")}px;
+bottom: ${styleValue("bottom")}px;
+left: ${styleValue("left")}px;`;
+      break;
+    }
+
+    return "";
+  },
+
+  init (){
+    this._super(...arguments);
+
+    if(this.get("parentController"))
+      this.get("parentController").set(this.layoutId||"layout", this);
+
+    if($(window).width() < 1000){
+      this.set("mobile", false);
+    }
+
+    var view = this;
+
+    var resizeHandler = function() {
+      if(view.get("mobile")) {
+        if($(window).width() >= 1000){
+          view.set("mobile", false);
+          view.expandAllPanels();
+          //view.rerender();
+        }
+      }
+      else{
+        if($(window).width() < 1000){
+          view.set("mobile", true);
+          view.collapseSidePanels();
+          //view.rerender();
+        }
+      }
+    };
+
+    this.set('resizeHandler', resizeHandler);
+    $(window).bind('resize', this.get('resizeHandler'));
+  },
+  willDestroy (){
+    $(window).unbind('resize', this.get('resizeHandler'));
+  },
+  didRender(){
+    this._super(...arguments);
+    this.get("resizeHandler")();
   }
 });

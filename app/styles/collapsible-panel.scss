@@ -1,3 +1,4 @@
+$border-color: #cecece;
 $collapse-button-width: 26px;
 $collapse-button-height: 26px;
 $collapse-button-border-radius: 2px;
@@ -78,7 +79,7 @@ $default-west: 100px;
       width: $collapse-button-width / 2;
     }
   }
-  
+
 
   &--top{
     .collapsible-panel {
@@ -100,7 +101,7 @@ $default-west: 100px;
       top: 100%;
       border-top: none;
       @include border-radius-separate(0,0, $collapse-button-border-radius, $collapse-button-border-radius);
-    }    
+    }
     .collapsible-panel-controls{
       bottom: 0;
       left: 0;
@@ -206,7 +207,11 @@ $default-west: 100px;
       right: 0;
       bottom: 0;
     }
-
+    &.collapsed{
+      .collapsible-panel {
+        display: none;
+      }
+    }
     .button-collapse-panel{
       right: 10px;
       top: 10px;
@@ -215,6 +220,64 @@ $default-west: 100px;
       left: 100%;
       margin-left: 10px;
       top: 10px;
+    }
+  }
+}
+
+.collapsible-layout{
+  $layout-control-panel-height: 40px;
+  
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+
+  .collapsible-layout-control-panel{
+    display: none;
+
+    position: absolute;
+    width: 100%;
+    height: $layout-control-panel-height;
+    bottom: 0;
+    left: 0;
+
+    background: white;
+    border-top: 1px solid $border-color;
+  }
+
+  @media (max-width: 999px) {
+    .collapsible-panel{
+      border: none;
+      
+      .button-collapse-panel,
+      .button-expand-panel{
+        display: none;
+      }
+
+      &--top,
+      &--bottom,
+      &--left,
+      &--right,
+      &--center{
+	.collapsible-panel{
+	  top: 0;
+	  right: 0;
+	  bottom: $layout-control-panel-height !important;
+	  left: 0;
+	  overflow: auto;
+
+	  width: auto !important;
+	  height: auto !important;
+	}
+	&.collapsed{
+	  display: none;
+	}
+      }
+    }
+
+    .collapsible-layout-control-panel{
+      display: block;
     }
   }
 }
