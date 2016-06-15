@@ -24,13 +24,13 @@ export default Ember.Component.extend({
     this.set('isCollapsed', true);
     this.layout.set(`${this.region}Collapsed`, this.isCollapsed);
     this.layout.restylePanels();
-    this.sendAction('collapsePanel');
+    this.sendAction('config.actions.collapsePanel');
   },
   expand() {
     this.set('isCollapsed', false);
     this.layout.set(`${this.region}Collapsed`, this.isCollapsed);
     this.layout.restylePanels();
-    this.sendAction('expandPanel');
+    this.sendAction('config.actions.expandPanel');
   },
 
   updateLayout(){
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
     this.set("region", config.region);
     layout.set(config.region, this);
   },
-
+  
   didInsertElement(){
     this._super(...arguments);
 

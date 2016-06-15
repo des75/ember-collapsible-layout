@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   ],
 
   regions: ["top", "right", "bottom", "left", "center"],
+  primaryRegion: "center",
 
   actions: {
     collapsePanel (region){
@@ -51,7 +52,7 @@ export default Ember.Component.extend({
   },
   // ==
 
-  
+
   _collapse(region){
     if(this.get(region)){
       this.get(region).collapse();
@@ -63,53 +64,62 @@ export default Ember.Component.extend({
     }
   },
 
-  collapseSidePanels (){
-    this._collapse("top");
-    this._collapse("right");
-    this._collapse("bottom");
-    this._collapse("left");
+  collapseNonPrimaryPanels (){
+    this.regions.forEach((r) => {
+      if(this.get(r) && this.get("primaryRegion") != r){
+        this.get(r).collapse();
+      }
+    });
+    this.get(this.primaryRegion).expand();
   },
-  expandSidePanels (){
-    this._expand("top");
-    this._expand("right");
-    this._expand("bottom");
-    this._expand("left");
+  expandNonPrimaryPanels (){
+    this.regions.forEach((r) => {
+      if(this.get(r) && this.get("primaryRegion") != r){
+        this.get(r).expand();
+      }
+    });
   },
 
   collapseAllPanels(){
-    this.collapseSidePanels();
-    this._collapse("center");
+    this.regions.forEach((r) => {
+      if(this.get(r)){
+	this.get(r).collapse();
+      }
+    });
   },
   expandAllPanels(){
-    this.expandSidePanels();
-    this._expand("center");
+    this.regions.forEach((r) => {
+      if(this.get(r)){
+	this.get(r).expand();
+      }
+    });
   },
 
   restylePanels(){
     this.regions.forEach((r) => {
       if(this.get(r)){
-	this.get(r).updateLayout();
+        this.get(r).updateLayout();
       }
     });
   },
-  
+
   styleFor(region){
     var layout =this;
     var styleValue = function(r){
       if(layout.get(r)){
-	return layout.get(r).isCollapsed ? 0 : layout.get(r).sizeValue;
+        return layout.get(r).isCollapsed ? 0 : layout.get(r).sizeValue;
       }
       else{
-	return 0;
+        return 0;
       }
     };
-    
+
     switch(region){
     case "top":
     case "bottom":
       return `height: ${styleValue(region)}px;`;
       break;
-      
+
     case "left":
     case "right":
       return `width: ${styleValue(region)}px;
@@ -151,7 +161,7 @@ left: ${styleValue("left")}px;`;
       else{
         if($(window).width() < 1000){
           view.set("mobile", true);
-          view.collapseSidePanels();
+          view.collapseNonPrimaryPanels();
           //view.rerender();
         }
       }
