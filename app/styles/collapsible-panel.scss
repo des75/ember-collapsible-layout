@@ -10,8 +10,8 @@ $collapse-button-border-radius: 2px;
       position: absolute;
       top: 0;
       left: 0;
-      height: 100%;
-      width: 100%;
+      right: 0;
+      bottom: 0;
     }
   }
 
@@ -37,7 +37,7 @@ $collapse-button-border-radius: 2px;
   .collapsible-panel-controls{
     position: absolute;
     background: transparent;
-    z-index: 50;
+    z-index: 50;  
   }
 
   .button-collapse-panel,
@@ -46,7 +46,6 @@ $collapse-button-border-radius: 2px;
     padding: 0;
     font-size: 9px;
   }
-
 }
 
 // =============
@@ -55,6 +54,8 @@ $default-north: 100px;
 $default-east: 100px;
 $default-south: 100px;
 $default-west: 100px;
+
+$resize-tool-width: $collapse-button-width / 2;
 
 .collapsible-panel {
   position: absolute;
@@ -91,6 +92,9 @@ $default-west: 100px;
       .collapsible-panel {
         height: 0 !important;
       }
+      .collapsible-panel-controls{
+        height: 0 !important;
+      }
     }
     .button-collapse-panel{
       bottom: 0;
@@ -107,6 +111,16 @@ $default-west: 100px;
       left: 0;
       width: 100%;
     }
+
+    &.resizeable{
+      .collapsible-panel-controls{
+        background: $border-color;
+        cursor: n-resize;
+        &:hover{
+          height: $resize-tool-width;
+        }
+      }
+    }
   }
 
   &--right{
@@ -119,6 +133,9 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
+        width: 0 !important;
+      }
+      .collapsible-panel-controls{
         width: 0 !important;
       }
     }
@@ -138,6 +155,16 @@ $default-west: 100px;
       top: 0;
       height: 100%;
     }
+
+    &.resizeable{
+      .collapsible-panel-controls{
+        background: $border-color;
+        cursor: e-resize;
+        &:hover{
+          width: $resize-tool-width;
+        }
+      }
+    }
   }
 
   &--bottom{
@@ -148,6 +175,9 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
+        height: 0 !important;
+      }
+      .collapsible-panel-controls{
         height: 0 !important;
       }
     }
@@ -167,6 +197,16 @@ $default-west: 100px;
       left: 0;
       width: 100%;
     }
+
+    &.resizeable{
+      .collapsible-panel-controls{
+        background: $border-color;
+        cursor: s-resize;
+        &:hover{
+          height: $resize-tool-width;
+        }
+      }
+    }
   }
 
   &--left{
@@ -179,6 +219,9 @@ $default-west: 100px;
     }
     &.collapsed{
       .collapsible-panel {
+        width: 0 !important;
+      }
+      .collapsible-panel-controls{
         width: 0 !important;
       }
     }
@@ -197,6 +240,16 @@ $default-west: 100px;
       right: 0;
       top: 0;
       height: 100%;
+    }
+
+    &.resizeable{
+      .collapsible-panel-controls{
+        background: $border-color;
+        cursor: w-resize;
+        &:hover{
+          width: $resize-tool-width;
+        }
+      }
     }
   }
 
@@ -226,12 +279,18 @@ $default-west: 100px;
 
 .collapsible-layout{
   $layout-control-panel-height: 40px;
-  
+
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   top: 0;
+
+  .resize-marker{
+    z-index: 100;
+    position: absolute;
+    background: #666;
+  }
 
   .collapsible-layout-control-panel{
     display: none;
@@ -249,7 +308,7 @@ $default-west: 100px;
   @media (max-width: 999px) {
     .collapsible-panel{
       border: none;
-      
+
       .button-collapse-panel,
       .button-expand-panel{
         display: none;
@@ -260,26 +319,26 @@ $default-west: 100px;
       &--left,
       &--right,
       &--center{
-	.collapsible-panel{
-	  top: 0;
-	  right: 0;
-	  bottom: $layout-control-panel-height !important;
-	  left: 0;
-	  overflow: auto;
+        .collapsible-panel{
+          top: 0;
+          right: 0;
+          bottom: $layout-control-panel-height !important;
+          left: 0;
+          overflow: auto;
 
-	  width: auto !important;
-	  height: auto !important;
-	}
-	&.collapsed{
-	  display: none;
-	}
+          width: auto !important;
+          height: auto !important;
+        }
+        &.collapsed{
+          display: none;
+        }
       }
     }
 
     .collapsible-layout-control-panel{
       display: block;
     }
-    
+
     .collapsible-panel-controls{
       display: none;
     }

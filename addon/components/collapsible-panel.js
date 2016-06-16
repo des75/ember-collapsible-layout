@@ -7,7 +7,8 @@ export default Ember.Component.extend({
     "right:collapsible-panel--right",
     "bottom:collapsible-panel--bottom",
     "left:collapsible-panel--left",
-    "center:collapsible-panel--center"
+    "center:collapsible-panel--center",
+    "resizeable:resizeable"
   ],
   classNames: "collapsible-panel-container",
 
@@ -19,7 +20,6 @@ export default Ember.Component.extend({
       this.get("layout").expandPanel(this.get("region"));
     }
   },
-
   collapse() {
     this.set('isCollapsed', true);
     this.layout.set(`${this.region}Collapsed`, this.isCollapsed);
@@ -43,6 +43,7 @@ export default Ember.Component.extend({
     let layout = this.get("layout");
     this.set(config.region, true);
     this.set("region", config.region);
+    this.set("resizeable", config.resizeable);
     layout.set(config.region, this);
   },
   
