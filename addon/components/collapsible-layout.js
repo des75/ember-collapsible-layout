@@ -66,7 +66,7 @@ export default Ember.Component.extend({
 
   collapseNonPrimaryPanels (){
     this.regions.forEach((r) => {
-      if(this.get(r) && this.get("primaryRegion") != r){
+      if(this.get(r) && this.get("primaryRegion") !== r){
         this.get(r).collapse();
       }
     });
@@ -74,7 +74,7 @@ export default Ember.Component.extend({
   },
   expandNonPrimaryPanels (){
     this.regions.forEach((r) => {
-      if(this.get(r) && this.get("primaryRegion") != r){
+      if(this.get(r) && this.get("primaryRegion") !== r){
         this.get(r).expand();
       }
     });
@@ -118,21 +118,18 @@ export default Ember.Component.extend({
     case "top":
     case "bottom":
       return `height: ${styleValue(region)}px;`;
-      break;
 
     case "left":
     case "right":
       return `width: ${styleValue(region)}px;
 top: ${styleValue("top")}px;
 bottom: ${styleValue("bottom")}px;`;
-      break;
 
     case "center":
       return `top: ${styleValue("top")}px;
 right: ${styleValue("right")}px;
 bottom: ${styleValue("bottom")}px;
 left: ${styleValue("left")}px;`;
-      break;
     }
 
     return "";
@@ -141,10 +138,11 @@ left: ${styleValue("left")}px;`;
   init (){
     this._super(...arguments);
 
-    if(this.get("parentController"))
+    if(this.get("parentController")){
       this.get("parentController").set(this.layoutId||"layout", this);
+    }
 
-    if($(window).width() < 1000){
+    if(Ember.$(window).width() < 1000){
       this.set("mobile", false);
     }
 
@@ -152,14 +150,14 @@ left: ${styleValue("left")}px;`;
 
     var resizeHandler = function() {
       if(view.get("mobile")) {
-        if($(window).width() >= 1000){
+        if(Ember.$(window).width() >= 1000){
           view.set("mobile", false);
           view.expandAllPanels();
           //view.rerender();
         }
       }
       else{
-        if($(window).width() < 1000){
+        if(Ember.$(window).width() < 1000){
           view.set("mobile", true);
           view.collapseNonPrimaryPanels();
           //view.rerender();
@@ -168,14 +166,18 @@ left: ${styleValue("left")}px;`;
     };
 
     this.set('resizeHandler', resizeHandler);
-    $(window).bind('resize', this.get('resizeHandler'));
+    Ember.$(window).bind('resize', this.get('resizeHandler'));
   },
   willDestroy (){
-    $(window).unbind('resize', this.get('resizeHandler'));
+    Ember.$(window).unbind('resize', this.get('resizeHandler'));
   },
   didRender(){
     this._super(...arguments);
+    Ember.run.scheduleOnce('afterRender', this, 'onAfterRender');
+  },
+  onAfterRender(){
     this.get("resizeHandler")();
+    this.restylePanels();
   },
 
   // ==
@@ -194,13 +196,13 @@ left: ${styleValue("left")}px;`;
       }
 
       if(region.resizeable){
-	this.set("resizeMode", region);
-	this.set("resizedSize", region.sizeValue);
-	
-	let resizeMarker = Ember.$("<div></div>").addClass("resize-marker");
-	this.$().append(resizeMarker);
-	
-	if(region.keySizeValue == "width"){
+        this.set("resizeMode", region);
+        this.set("resizedSize", region.sizeValue);
+
+        let resizeMarker = Ember.$("<div></div>").addClass("resize-marker");
+        this.$().append(resizeMarker);
+
+        if(region.keySizeValue === "width"){
           this.set("initialCoord", e.clientX);
           resizeMarker.css({
             top: 0,
@@ -208,8 +210,8 @@ left: ${styleValue("left")}px;`;
             height: "100%",
             width: 1
           });
-	}
-	else if(region.keySizeValue == "height"){
+        }
+        else if(region.keySizeValue === "height"){
           this.set("initialCoord", e.clientY);
           resizeMarker.css({
             left: 0,
@@ -217,14 +219,14 @@ left: ${styleValue("left")}px;`;
             width: "100%",
             height: 1
           });
-	}
+        }
       }
     }
   },
-  mouseUp(e){
+  mouseUp(){
     if(this.resizeMode){
       let region = this.resizeMode;
-      
+
       this.$(".resize-marker").remove();
       region.set("sizeValue", this.resizedSize);
 
@@ -238,24 +240,24 @@ left: ${styleValue("left")}px;`;
     if(this.resizeMode){
       let region = this.resizeMode;
       let regionsResizeMultipliers = {
-	top: -1,
-	right: 1,
-	bottom: 1,
-	left: -1
+        top: -1,
+        right: 1,
+        bottom: 1,
+        left: -1
       };
       let resizeMarker = this.$(".resize-marker");
 
-      if(region.keySizeValue == "width"){
+      if(region.keySizeValue === "width"){
         this.set("resizedSize",  region.sizeValue + (parseInt(this.initialCoord) - parseInt(e.clientX)) * regionsResizeMultipliers[region.region]);
         resizeMarker.css({
           left: e.clientX - this.$().offset().left
-	});
+        });
       }
-      else if(region.keySizeValue == "height"){
+      else if(region.keySizeValue === "height"){
         this.set("resizedSize", region.sizeValue + (parseInt(this.initialCoord) - parseInt(e.clientY)) * regionsResizeMultipliers[region.region]);
         resizeMarker.css({
           top: e.clientY - this.$().offset().top
-	});
+        });
       }
 
       return false;
