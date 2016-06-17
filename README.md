@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/des75/ember-collapsible-layout.svg?branch=master)](https://travis-ci.org/des75/ember-collapsible-layout)
+
 # Ember-collapsible-layout
 
 This README outlines the details of collaborating on this Ember addon.
