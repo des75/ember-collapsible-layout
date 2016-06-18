@@ -7,7 +7,9 @@ See demo [here](des75.github.io/ember-collapsible-layout-demo/)
 
 ## Installation
 
-* npm install ember-collapsible-layout --save-dev
+```
+npm install ember-collapsible-layout --save-dev
+```
 
 ## Usage
 
