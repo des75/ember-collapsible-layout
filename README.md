@@ -13,34 +13,39 @@ See demo [here](des75.github.io/ember-collapsible-layout-demo/)
 
 In your template:
 
-* {{#collapsible-layout as |layout|}}
-* 
-*   {{#collapsible-panel
-*   layout=layout
-*   config=centerPanel
-*   }}
-*     Center panel content here
-*   {{/collapsible-panel}}
-* 
-*   {{#collapsible-panel
-*   layout=layout
-*   config=leftPanel
-*   }}
-*     Left panel content here
-*   {{/collapsible-panel}}
-* 
-* {{/collapsible-layout}}
+```
+{{#collapsible-layout as |layout|}}
+
+  {{#collapsible-panel
+  layout=layout
+  config=centerPanel
+  }}
+    Center panel content here
+  {{/collapsible-panel}}
+
+  {{#collapsible-panel
+  layout=layout
+  config=leftPanel
+  }}
+    Left panel content here
+  {{/collapsible-panel}}
+
+{{/collapsible-layout}}
+```
 
 In the controller:
 
-* export default Ember.Controller.extend({
-*   leftPanel: {
-*     region: "left", // required field
-*     width: 300,     
-*     resizeable: true
-*   },  
-* 
-*   centerPanel: {  // center panel is only required panel
-*     region: "center"
-*   }
-* });
+```
+export default Ember.Controller.extend({
+  leftPanel: {
+    region: "left", // required field
+    width: 300,     
+    resizeable: true
+  },  
+
+  centerPanel: {  // center panel is only required panel
+    region: "center"
+  }
+});
+```
+
