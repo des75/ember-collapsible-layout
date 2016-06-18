@@ -3,7 +3,7 @@
 
 # Ember collapsible layout
 
-See demo [here](des75.github.io/ember-collapsible-layout-demo/)
+See demo [here](https://des75.github.io/ember-collapsible-layout-demo/)
 
 ## Installation
 
