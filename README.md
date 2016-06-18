@@ -1,30 +1,46 @@
 [![Build Status](https://travis-ci.org/des75/ember-collapsible-layout.svg?branch=master)](https://travis-ci.org/des75/ember-collapsible-layout)
 [![Coverage Status](https://coveralls.io/repos/github/des75/ember-collapsible-layout/badge.svg?branch=master)](https://coveralls.io/github/des75/ember-collapsible-layout?branch=master)
 
-# Ember-collapsible-layout
+# Ember collapsible layout
 
-This README outlines the details of collaborating on this Ember addon.
+See demo [here](des75.github.io/ember-collapsible-layout-demo/)
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+* npm install ember-collapsible-layout --save-dev
 
-## Running
+## Usage
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+In your template:
 
-## Running Tests
+* {{#collapsible-layout as |layout|}}
+* 
+*   {{#collapsible-panel
+*   layout=layout
+*   config=centerPanel
+*   }}
+*     Center panel content here
+*   {{/collapsible-panel}}
+* 
+*   {{#collapsible-panel
+*   layout=layout
+*   config=leftPanel
+*   }}
+*     Left panel content here
+*   {{/collapsible-panel}}
+* 
+* {{/collapsible-layout}}
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+In the controller:
 
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
- 
+* export default Ember.Controller.extend({
+*   leftPanel: {
+*     region: "left", // required field
+*     width: 300,     
+*     resizeable: true
+*   },  
+* 
+*   centerPanel: {  // center panel is only required panel
+*     region: "center"
+*   }
+* });
