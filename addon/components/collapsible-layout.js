@@ -142,41 +142,47 @@ left: ${styleValue("left")}px;`;
       this.get("parentController").set(this.layoutId||"layout", this);
     }
 
-    if(Ember.$(window).width() < 1000){
-      this.set("mobile", false);
+    if(this.responsiveLayout){
+      if(Ember.$(window).width() < 1000){
+        this.set("mobile", false);
+      }
+
+      var view = this;
+
+      var resizeHandler = function() {
+        if(view.get("mobile")) {
+          if(Ember.$(window).width() >= 1000){
+            view.set("mobile", false);
+            view.expandAllPanels();
+            //view.rerender();
+          }
+        }
+        else{
+          if(Ember.$(window).width() < 1000){
+            view.set("mobile", true);
+            view.collapseNonPrimaryPanels();
+            //view.rerender();
+          }
+        }
+      };
+
+      this.set('resizeHandler', resizeHandler);
+      Ember.$(window).bind('resize', this.get('resizeHandler'));
     }
-
-    var view = this;
-
-    var resizeHandler = function() {
-      if(view.get("mobile")) {
-        if(Ember.$(window).width() >= 1000){
-          view.set("mobile", false);
-          view.expandAllPanels();
-          //view.rerender();
-        }
-      }
-      else{
-        if(Ember.$(window).width() < 1000){
-          view.set("mobile", true);
-          view.collapseNonPrimaryPanels();
-          //view.rerender();
-        }
-      }
-    };
-
-    this.set('resizeHandler', resizeHandler);
-    Ember.$(window).bind('resize', this.get('resizeHandler'));
   },
   willDestroy (){
-    Ember.$(window).unbind('resize', this.get('resizeHandler'));
+    if(this.responsiveLayout){
+      Ember.$(window).unbind('resize', this.get('resizeHandler'));
+    }
   },
   didRender(){
     this._super(...arguments);
     Ember.run.scheduleOnce('afterRender', this, 'onAfterRender');
   },
   onAfterRender(){
-    this.get("resizeHandler")();
+    if(this.responsiveLayout){
+      this.get("resizeHandler")();
+    }
     this.restylePanels();
   },
 
