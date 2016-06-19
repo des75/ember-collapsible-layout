@@ -6,7 +6,8 @@ export default Ember.Component.extend({
     "topCollapsed:top-collapsed",
     "rightCollapsed:right-collapsed",
     "bottomCollapsed:bottom-collapsed",
-    "leftCollapsed:left-collapsed"
+    "leftCollapsed:left-collapsed",
+    "responsiveLayout:responsive-layout"
   ],
 
   regions: ["top", "right", "bottom", "left", "center"],

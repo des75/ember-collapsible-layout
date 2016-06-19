@@ -309,42 +309,44 @@ $resize-tool-width: $collapse-button-width / 2;
     border-top: 1px solid $border-color;
   }
 
-  @media (max-width: 999px) {
-    .collapsible-panel{
-      border: none;
+  &.responsive-layout{
+    @media (max-width: 999px) {
+      .collapsible-panel{
+        border: none;
 
-      .button-collapse-panel,
-      .button-expand-panel{
-        display: none;
-      }
-
-      &--top,
-      &--bottom,
-      &--left,
-      &--right,
-      &--center{
-        .collapsible-panel{
-          top: 0;
-          right: 0;
-          bottom: $layout-control-panel-height !important;
-          left: 0;
-          overflow: auto;
-
-          width: auto !important;
-          height: auto !important;
-        }
-        &.collapsed{
+        .button-collapse-panel,
+        .button-expand-panel{
           display: none;
         }
+
+        &--top,
+        &--bottom,
+        &--left,
+        &--right,
+        &--center{
+          .collapsible-panel{
+            top: 0;
+            right: 0;
+            bottom: $layout-control-panel-height !important;
+            left: 0;
+            overflow: auto;
+
+            width: auto !important;
+            height: auto !important;
+          }
+          &.collapsed{
+            display: none;
+          }
+        }
       }
-    }
 
-    .collapsible-layout-control-panel{
-      display: block;
-    }
+      .collapsible-layout-control-panel{
+        display: block;
+      }
 
-    .collapsible-panel-controls{
-      display: none;
+      .collapsible-panel-controls{
+        display: none;
+      }
     }
   }
 }
