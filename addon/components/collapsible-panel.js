@@ -45,30 +45,32 @@ export default Ember.Component.extend({
     Ember.assert('config should be passed', config);
     Ember.assert('config.region should be passed', config.region);
     Ember.assert('must be inside {{#collapsible-layout}} block as layout', layout);
-    
+
     this.set(config.region, true);
     this.set("region", config.region);
     this.set("resizeable", config.resizeable);
 
     layout.set(config.region, this);
   },
-  
+
   didReceiveAttrs(){
     this._super(...arguments);
 
     let config = this.get("config");
 
-    if(config.region === "top" || config.region === "bottom"){
-      let height = config.height || 100;
+    if(!this.get("sizeValue")){
+      if(config.region === "top" || config.region === "bottom"){
+        let height = config.height || 100;
 
-      this.set("sizeValue", height);
-      this.set("keySizeValue", "height");
-    }
-    else if(config.region === "left" || config.region === "right"){
-      let width = config.width || 100;
+        this.set("sizeValue", height);
+        this.set("keySizeValue", "height");
+      }
+      else if(config.region === "left" || config.region === "right"){
+        let width = config.width || 100;
 
-      this.set("sizeValue", width);
-      this.set("keySizeValue", "width");
+        this.set("sizeValue", width);
+        this.set("keySizeValue", "width");
+      }
     }
   }
 
