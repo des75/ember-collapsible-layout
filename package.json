@@ -1,7 +1,7 @@
 {
   "name": "ember-collapsible-layout",
   "version": "0.0.9",
-  "description": "<a hreg='https://des75.github.io/ember-collapsible-layout-demo/'>Demo</a>",
+  "description": "https://des75.github.io/ember-collapsible-layout-demo/",
   "directories": {
     "doc": "doc",
     "test": "tests"
