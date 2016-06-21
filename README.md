@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/des75/ember-collapsible-layout.svg?branch=master)](https://travis-ci.org/des75/ember-collapsible-layout)
 [![Coverage Status](https://coveralls.io/repos/github/des75/ember-collapsible-layout/badge.svg?branch=master)](https://coveralls.io/github/des75/ember-collapsible-layout?branch=master)
+[![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ember-collapsible-layout)
 
 # Ember collapsible layout
 
