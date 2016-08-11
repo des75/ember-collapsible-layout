@@ -43,6 +43,7 @@ $collapse-button-border-radius: 2px;
     position: absolute;
     padding: 0;
     font-size: 9px;
+    border-radius: 0;
   }
 }
 
@@ -103,12 +104,12 @@ $resize-tool-width: $collapse-button-width / 2;
         .button-collapse-panel{
           bottom: 0;
           border-bottom: none;
-          @include border-bottom-radius($collapse-button-border-radius);
+          @include border-top-radius($collapse-button-border-radius);
         }
         .button-expand-panel{
           top: 100%;
           border-top: none;
-          @include border-top-radius($collapse-button-border-radius);
+          @include border-bottom-radius($collapse-button-border-radius);
         }
       }
     }
